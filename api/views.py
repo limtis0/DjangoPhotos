@@ -10,7 +10,7 @@ def api_overview(request):
     api_urls = {
         'List': '/list/',
         'Create': '/create/',
-        'Update': '/update/',
+        'Update': '/update/<str:pk>',
         'Delete': '/delete/<str:pk>/'
     }
     return Response(api_urls)
@@ -26,8 +26,24 @@ def list_photos(request):
 @api_view(['POST'])
 def create_photo(request):
     serializer = InputPhotoSerializer(data=request.data)
-    if not serializer.is_valid():
-        return Response(status=400)
+    return serializer.save_photo()
 
-    serializer.save()
-    return Response(serializer.data)
+
+@api_view(['POST'])
+def update_photo(request, pk):
+    photo = Photo.get_by_id(pk)
+    if not photo:
+        return Response(status=404)
+
+    serializer = InputPhotoSerializer(instance=photo, data=request.data)
+    return serializer.save_photo()
+
+
+@api_view(['DELETE'])
+def delete_photo(request, pk):
+    photo = Photo.get_by_id(pk)
+    if not photo:
+        return Response(status=404)
+
+    photo.delete()
+    return Response(status=200)

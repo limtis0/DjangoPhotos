@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class Photo(models.Model):
@@ -9,6 +10,10 @@ class Photo(models.Model):
     color = models.CharField(max_length=7, blank=True, null=True)
     URL = models.CharField(max_length=2048)
 
-    # String representation for debugging
-    def __str__(self):
-        return self.title
+    @classmethod
+    def get_by_id(cls, pk: int):
+        try:
+            photo = cls.objects.get(id=pk)
+        except ObjectDoesNotExist:
+            photo = None
+        return photo
