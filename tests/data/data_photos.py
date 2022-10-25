@@ -5,6 +5,12 @@ class DataPhotos:
         'URL': 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Web_Page.png'
     }
 
+    valid_photo_info = {
+        'width': 1050,
+        'height': 624,
+        'color': '#ffffff'
+    }
+
     valid_photo_2 = {
         'title': 'SecondTestImage',
         'albumID': 7654321,

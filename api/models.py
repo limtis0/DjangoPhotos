@@ -52,9 +52,9 @@ class Photo(models.Model):
         return hex_value
 
     @classmethod
-    def _get_image_info(cls, url: str):
+    def get_image_info(cls, url: str):
         if not cls._is_url_valid(url):
-            return None
+            return {}
 
         img = cls._get_image_from_url(url)
         width, height = img.size

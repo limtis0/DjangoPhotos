@@ -17,5 +17,7 @@ class InputPhotoSerializer(serializers.ModelSerializer):
     def save_photo(self):
         if not self.is_valid():
             return Response(status=400)
-        self.save()
+
+        params = Photo.get_image_info(self.validated_data['URL'])  # Calculating width, height and dominating color
+        self.save(**params)
         return Response(self.data, status=200)
