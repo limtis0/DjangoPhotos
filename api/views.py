@@ -20,12 +20,11 @@ def api_overview(request):
 def list_photos(request):
     photos = Photo.objects.all()
     serializer = OutputPhotoSerializer(photos, many=True)
-    return Response(serializer.data)
+    return Response(serializer.data, status=200)
 
 
 @api_view(['POST'])
 def create_photo(request):
-    print(request.data)
     serializer = InputPhotoSerializer(data=request.data)
     return serializer.save_photo()
 

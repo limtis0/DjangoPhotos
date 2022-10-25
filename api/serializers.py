@@ -18,4 +18,4 @@ class InputPhotoSerializer(serializers.ModelSerializer):
         if not self.is_valid():
             return Response(status=400)
         self.save()
-        return Response(status=200)
+        return Response(self.data, status=200)
