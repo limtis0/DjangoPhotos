@@ -1,5 +1,7 @@
 from django.db import models
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.validators import URLValidator
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
+import requests
 
 
 class Photo(models.Model):
@@ -17,3 +19,20 @@ class Photo(models.Model):
         except ObjectDoesNotExist:
             photo = None
         return photo
+
+    @staticmethod
+    def is_url_valid(url: str):
+        try:
+            # Validate URL structure
+            URLValidator()(url)
+
+            # Assert it leads to an image
+            image_formats = ("image/png", "image/jpeg", "image/jpg")
+            r = requests.head(url)
+            if r.headers["content-type"] in image_formats:
+                return True
+
+        except ValidationError:
+            pass
+        return False
+

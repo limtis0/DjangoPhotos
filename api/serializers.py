@@ -12,7 +12,7 @@ class OutputPhotoSerializer(serializers.ModelSerializer):
 class InputPhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
-        fields = ['title', 'albumID', 'URL']
+        fields = ('title', 'albumID', 'URL')
 
     def save_photo(self):
         if not self.is_valid():

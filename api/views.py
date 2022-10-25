@@ -25,6 +25,7 @@ def list_photos(request):
 
 @api_view(['POST'])
 def create_photo(request):
+    print(request.data)
     serializer = InputPhotoSerializer(data=request.data)
     return serializer.save_photo()
 
