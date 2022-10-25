@@ -2,7 +2,7 @@ class DataPhotos:
     valid_photo = {
         'title': 'TestImage',
         'albumID': 1234567,
-        'URL': 'https://via.placeholder.com/600/92c952'
+        'URL': 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Web_Page.png'
     }
 
     valid_photo_2 = {
