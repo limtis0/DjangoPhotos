@@ -4,4 +4,5 @@ from . import views
 urlpatterns = [
     path('', views.api_overview, name='API Overview'),
     path('list/', views.list_photos, name='Photos List'),
+    path('create/', views.create_photo, name='Add Photo')
 ]
