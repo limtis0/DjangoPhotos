@@ -21,9 +21,9 @@ class Photo(models.Model):
 
     @staticmethod
     def _get_dominant_color(img: Image):
-        img.resize((150, 150), resample=0)  # Minor optimization
+        img = img.resize((150, 150), resample=0)  # Minor optimization
         dominant_color = max(img.getcolors(maxcolors=22500), key=lambda x: x[0])  # Max count from List[(count, (RGB))]
-        hex_value = '#%02x%02x%02x' % dominant_color[1]  # Filter RGB tuple to HEX string
+        hex_value = '#%02x%02x%02x' % dominant_color[1][:3]  # Filter RGB tuple to HEX string
         return hex_value
 
     @classmethod

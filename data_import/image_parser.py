@@ -1,13 +1,15 @@
 from io import BytesIO
-from PIL import Image, UnidentifiedImageError
+from PIL import Image
 
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 
-import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.errorhandler import NoSuchElementException
+
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -21,17 +23,14 @@ class ImageParser:
             return False
 
     @staticmethod
-    def _get_image_requests(url: str):
-        try:
-            r = requests.get(url)
-            img = Image.open(BytesIO(r.content))
-            return img
-        except (ValueError, UnidentifiedImageError):  # Blocked by CloudFlare or URL is incorrect
+    def get_webdriver():
+        return webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+
+    @classmethod
+    def get_image(cls, driver: WebDriver, url: str):
+        if not cls._is_url_valid(url):
             return False
 
-    @staticmethod
-    def _get_image_selenium(url: str):
-        driver = webdriver.Chrome(ChromeDriverManager().install())
         driver.get(url)
         try:
             # Takes a partial screenshot of a first img object found

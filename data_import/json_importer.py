@@ -1,9 +1,11 @@
 import requests
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
+from rest_framework.response import Response
+from image_parser import ImageParser
 
 
-class JSONParser:
+class JSONImporter:
     schema = {
         "type": "array",
         "items": {
@@ -28,9 +30,17 @@ class JSONParser:
         except ValidationError:
             return False
 
+    @staticmethod
+    def import_from_url(url: str):
+        return requests.get(url).json()
+
     @classmethod
-    def import_from_url(cls, url: str):
-        json_data = requests.get(url).json()
-        if cls.is_json_valid(json_data):
-            return json_data
-        return False
+    def _import_json(cls, json_data):
+        if not cls._is_json_valid(json_data):
+            return Response('JSON answer is invalid')
+
+        driver = ImageParser.get_webdriver()
+        for j in json_data:
+            pass
+
+        driver.close()
