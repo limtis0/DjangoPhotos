@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from .models import Photo
 
-import os
+from pathlib import Path
 from DjangoPhotos.settings import BASE_DIR
 from storage.image_storage import ImageStorage
 from data_import.image_parser import ImageParser
@@ -37,9 +37,10 @@ class InputPhotoSerializer(serializers.ModelSerializer):
         if self.instance is not None:
             ImageStorage.remove(self.instance.url)
 
+        # Generating new url and saving it
         url = ImageStorage.generate_url(self.validated_data['albumId'])
-        ImageStorage.save_image(img, os.path.join(BASE_DIR, url))
-        self.validated_data['url'] = url
+        ImageStorage.save_image(img, Path(BASE_DIR, url))
+        self.validated_data['url'] = url.as_posix()
 
         # Calculating width, height and dominating color
         params = Photo.get_image_info(img)

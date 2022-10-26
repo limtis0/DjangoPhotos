@@ -4,7 +4,7 @@ from rest_framework.test import APIClient
 from api.models import Photo
 from testdata.data_photos import DataPhotos
 
-import os
+from pathlib import Path
 from DjangoPhotos.settings import BASE_DIR
 
 
@@ -22,6 +22,6 @@ def photo_applied():
 def photos_cleanup():
     def cleanup():
         for photo in Photo.objects.all():
-            os.remove(os.path.join(BASE_DIR, photo.url))
+            Path(BASE_DIR, photo.url).unlink()
 
     return cleanup  # Returns a callable
