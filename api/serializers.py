@@ -33,15 +33,13 @@ class InputPhotoSerializer(serializers.ModelSerializer):
         if not img:
             return Response(data='Image can not be loaded', status=400)
 
-        # Leaving url as is on update
+        # Removing previously loaded picture on update
         if self.instance is not None:
-            url = self.instance.url
-        # Generating new url on creation
-        else:
-            url = ImageStorage.generate_url()
+            ImageStorage.remove(self.instance.url)
 
+        url = ImageStorage.generate_url(self.validated_data['albumId'])
+        ImageStorage.save_image(img, os.path.join(BASE_DIR, url))
         self.validated_data['url'] = url
-        img.save(os.path.join(BASE_DIR, url))
 
         # Calculating width, height and dominating color
         params = Photo.get_image_info(img)

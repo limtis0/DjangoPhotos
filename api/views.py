@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .models import Photo
 from .serializers import InputPhotoSerializer, OutputPhotoSerializer
 from data_import.json_importer import JSONImporter
+from storage.image_storage import ImageStorage
 
 
 @api_view(['GET'])
@@ -45,8 +46,9 @@ def update_photo(request, pk):
 def delete_photo(request, pk):
     photo = Photo.get_by_id(pk)
     if not photo:
-        return Response(status=404)
+        return Response(f'Photo by id={pk} is not found', status=404)
 
+    ImageStorage.remove(photo.url)
     photo.delete()
     return Response(status=200)
 

@@ -1,5 +1,4 @@
 from api.models import Photo
-from testdata.data_photos import DataPhotos
 from PIL import Image
 
 
