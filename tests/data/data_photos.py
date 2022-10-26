@@ -17,6 +17,8 @@ class DataPhotos:
         'URL': 'https://via.placeholder.com/600/f66b97'
     }
 
-    incomplete_photo = {
-        'title': 'TestImage'
+    # Incomplete and URL has no images
+    invalid_photo = {
+        'title': 'TestImage',
+        'URL': 'https://www.longestjokeintheworld.com/'
     }

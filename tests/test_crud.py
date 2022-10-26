@@ -12,7 +12,7 @@ class TestCRUD:
 
     @pytest.mark.django_db
     def test_create(self, api_client):
-        create_fail = api_client.post(f'{URL.API_DIR}{URL.CREATE}', data=DataPhotos.incomplete_photo)
+        create_fail = api_client.post(f'{URL.API_DIR}{URL.CREATE}', data=DataPhotos.invalid_photo)
         assert create_fail.status_code == 400, 'Bad request is handled incorrectly'
 
         create = api_client.post(f'{URL.API_DIR}{URL.CREATE}', data=DataPhotos.valid_photo)
@@ -22,7 +22,7 @@ class TestCRUD:
     def test_update(self, api_client, photo_applied):
         url = f'{URL.API_DIR}{URL.UPDATE}{photo_applied.id}/'
 
-        update_fail = api_client.post(url, data=DataPhotos.incomplete_photo)
+        update_fail = api_client.post(url, data=DataPhotos.invalid_photo)
         assert update_fail.status_code == 400, 'Bad request is handled incorrectly'
 
         update = api_client.post(url, data=DataPhotos.valid_photo_2)
