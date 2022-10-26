@@ -2,7 +2,8 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from .models import Photo
 
-from DjangoPhotos.settings import MEDIA_ROOT, MEDIA_URL
+import os
+from DjangoPhotos.settings import BASE_DIR
 from storage.image_storage import ImageStorage
 from data_import.image_parser import ImageParser
 
@@ -32,9 +33,15 @@ class InputPhotoSerializer(serializers.ModelSerializer):
         if not img:
             return Response(data='Image can not be loaded', status=400)
 
-        new_url = ImageStorage.generate_url()
-        img.save(f'{MEDIA_ROOT}{new_url}')
-        self.validated_data['url'] = f'{MEDIA_URL}{new_url}'
+        # Leaving url as is on update
+        if self.instance is not None:
+            url = self.instance.url
+        # Generating new url on creation
+        else:
+            url = ImageStorage.generate_url()
+
+        self.validated_data['url'] = url
+        img.save(os.path.join(BASE_DIR, url))
 
         # Calculating width, height and dominating color
         params = Photo.get_image_info(img)
