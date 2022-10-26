@@ -3,6 +3,7 @@ from rest_framework.response import Response
 
 from .models import Photo
 from .serializers import InputPhotoSerializer, OutputPhotoSerializer
+from data_import.json_importer import JSONImporter
 
 
 @api_view(['GET'])
@@ -11,7 +12,8 @@ def api_overview(request):
         'List': '/list/',
         'Create': '/create/',
         'Update': '/update/<str:pk>',
-        'Delete': '/delete/<str:pk>/'
+        'Delete': '/delete/<str:pk>/',
+        'Import from API': '/import/from_api'
     }
     return Response(api_urls)
 
@@ -47,3 +49,12 @@ def delete_photo(request, pk):
 
     photo.delete()
     return Response(status=200)
+
+
+@api_view(['POST'])
+def import_from_api(request):
+    url = request.data.get('url')
+    if not url:
+        Response(status=400)
+
+    return JSONImporter.import_from_url(url)

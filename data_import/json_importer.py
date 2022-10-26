@@ -1,8 +1,13 @@
 import requests
+from json import JSONDecodeError
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
+
+from .image_parser import ImageParser
+from .url_is_valid import url_is_valid
+
 from rest_framework.response import Response
-from image_parser import ImageParser
+from api.serializers import InputPhotoSerializer
 
 
 class JSONImporter:
@@ -30,17 +35,27 @@ class JSONImporter:
         except ValidationError:
             return False
 
-    @staticmethod
-    def import_from_url(url: str):
-        return requests.get(url).json()
-
     @classmethod
     def _import_json(cls, json_data):
         if not cls._is_json_valid(json_data):
-            return Response('JSON answer is invalid')
+            return Response('JSON response is invalid', status=400)
 
         driver = ImageParser.get_webdriver()
-        for j in json_data:
-            pass
-
+        for j in json_data[:10]:  # Restricted to 10 for demonstration
+            serializer = InputPhotoSerializer(data=j)
+            serializer.save_photo(driver)
         driver.close()
+
+        return Response(status=200)
+
+    @classmethod
+    def import_from_url(cls, url: str):
+        if not url_is_valid(url):
+            return Response('Provided URL is invalid', status=400)
+
+        try:
+            json_data = requests.get(url).json()
+        except JSONDecodeError:
+            return Response('Could not parse JSON from provided URL', status=400)
+
+        return cls._import_json(json_data)
