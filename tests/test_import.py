@@ -4,7 +4,7 @@ import requests
 from api.urls import URL
 from api.models import Photo
 
-from data.data_import import DataImport
+from testdata.data_import import DataImport
 from data_import.json_importer import JSONImporter
 
 

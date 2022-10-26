@@ -2,7 +2,7 @@ import pytest
 from rest_framework.test import APIClient
 
 from api.models import Photo
-from data.data_photos import DataPhotos
+from testdata.data_photos import DataPhotos
 
 import os
 from DjangoPhotos.settings import BASE_DIR
