@@ -12,12 +12,12 @@ class OutputPhotoSerializer(serializers.ModelSerializer):
 class InputPhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
-        fields = ('title', 'albumID', 'URL')
+        fields = ('title', 'albumId', 'url')
 
     def save_photo(self):
         if not self.is_valid():
             return Response(status=400)
 
-        params = Photo.get_image_info(self.validated_data['URL'])  # Calculating width, height and dominating color
-        self.save(**params)
+        # params = Photo.get_image_info(self.validated_data['url'])  # Calculating width, height and dominating color
+        self.save()  # **params
         return Response(self.data, status=200)

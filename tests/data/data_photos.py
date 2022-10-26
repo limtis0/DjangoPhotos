@@ -1,8 +1,8 @@
 class DataPhotos:
     valid_photo = {
         'title': 'TestImage',
-        'albumID': 1234567,
-        'URL': 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Web_Page.png'
+        'albumId': 1234567,
+        'url': 'https://upload.wikimedia.org/wikipedia/commons/b/bd/Web_Page.png'
     }
 
     valid_photo_info = {
@@ -13,12 +13,12 @@ class DataPhotos:
 
     valid_photo_2 = {
         'title': 'SecondTestImage',
-        'albumID': 7654321,
-        'URL': 'https://via.placeholder.com/600/f66b97'
+        'albumId': 7654321,
+        'url': 'https://via.placeholder.com/600/f66b97'
     }
 
     # Incomplete and URL has no images
     invalid_photo = {
         'title': 'TestImage',
-        'URL': 'https://www.longestjokeintheworld.com/'
+        'url': 'https://www.longestjokeintheworld.com/'
     }

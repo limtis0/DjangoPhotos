@@ -5,11 +5,11 @@ from PIL import Image
 
 class Photo(models.Model):
     title = models.CharField(max_length=128)
-    albumID = models.PositiveIntegerField()
+    albumId = models.PositiveIntegerField()
     width = models.PositiveIntegerField(blank=True, null=True)
     height = models.PositiveIntegerField(blank=True, null=True)
     color = models.CharField(max_length=7, blank=True, null=True)
-    URL = models.CharField(max_length=2048)
+    url = models.CharField(max_length=2048)
 
     @classmethod
     def get_by_id(cls, pk: int):

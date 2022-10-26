@@ -27,7 +27,7 @@ class TestCRUD:
 
         update = api_client.post(url, data=DataPhotos.valid_photo_2)
         assert update.status_code == 200, 'Failed to update'
-        assert Photo.get_by_id(1).albumID == DataPhotos.valid_photo_2['albumID'], 'Photo has not changed on update'
+        assert Photo.get_by_id(1).albumId == DataPhotos.valid_photo_2['albumId'], 'Photo has not changed on update'
 
     @pytest.mark.django_db
     def test_delete(self, api_client, photo_applied):
