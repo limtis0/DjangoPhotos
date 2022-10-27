@@ -80,12 +80,17 @@ class JSONImporter:
     def import_from_local_file(cls, path: Union[str, bytes, PathLike]):
         try:
             with open(path) as f:
-                json_data = json.load(f)
-        except (UnicodeDecodeError, json.JSONDecodeError):
-            return Response('Filetype must be .json', status=400)
+                return cls.import_from_file(f)
         except PermissionError:
             return Response('Permission denied. Passed directory instead of a file?', status=400)
         except FileNotFoundError:
             return Response('File not found', status=400)
+
+    @classmethod
+    def import_from_file(cls, file):
+        try:
+            json_data = json.load(file)
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            return Response('Filetype must be .json', status=400)
 
         return cls._import_json(json_data)

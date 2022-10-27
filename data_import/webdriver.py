@@ -20,6 +20,7 @@ class WebDriver(metaclass=Singleton):
     def __init__(self):
         service = Service(ChromeDriverManager().install())
         options = Options()
+        options.add_argument("--start-maximized")
         # _options.headless = True
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
@@ -33,6 +34,7 @@ class WebDriver(metaclass=Singleton):
 
         # This is a hack
         # Selenium hangs while handling SIGINT (for a minute or so): https://github.com/SeleniumHQ/selenium/issues/9835
+        # It won't be a problem, when ran in a restricted environment, but on a local machine it kills chrome :/
         for proc in psutil.process_iter():
             if proc.name() in ('chrome.exe', 'chromedriver.exe'):
                 proc.kill()

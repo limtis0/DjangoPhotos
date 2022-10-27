@@ -1,5 +1,6 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, JSONParser
 
 from .models import Photo
 from .serializers import InputPhotoSerializer, OutputPhotoSerializer
@@ -12,9 +13,10 @@ def api_overview(request):
     api_urls = {
         'List': '/list/',
         'Create': '/create/',
-        'Update': '/update/<str:pk>',
+        'Update': '/update/<str:pk>/',
         'Delete': '/delete/<str:pk>/',
-        'Import from API': '/import/from_api'
+        'Import from API': '/import/from_api/',
+        'Import from file': '/import/from_file/'
     }
     return Response(api_urls)
 
@@ -60,3 +62,13 @@ def import_from_api(request):
         Response(status=400)
 
     return JSONImporter.import_from_url(url)
+
+
+@api_view(['POST'])
+@parser_classes((MultiPartParser, JSONParser))
+def import_from_file(request):
+    file = request.FILES.get('file')
+    if not file:
+        return Response('{file} is not provided', status=400)
+
+    return JSONImporter.import_from_file(file)

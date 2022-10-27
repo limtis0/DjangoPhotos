@@ -13,3 +13,4 @@ def gracefully_shutdown(*_):
 
 
 signal.signal(signal.SIGINT, gracefully_shutdown)
+signal.signal(signal.SIGTERM, gracefully_shutdown)
