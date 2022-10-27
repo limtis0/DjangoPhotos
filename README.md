@@ -47,11 +47,11 @@ python ./manage.py <COMMAND> <ARGUMENTS>
 It is easier to store locally.
 
 ### Why Selenium?
-Third-party API is protected by Cloudflare's IAUA, which blocks all of the traffic from bots.
+Third-party API is protected by [Cloudflare's IAUA](https://support.cloudflare.com/hc/en-us/articles/200170076), which blocks all of the traffic from bots.
 To bypass this, I used **Selenium** with additional **Selenium-Stealth** module.
 
-To increase efficiency, Selenium Webdriver loads as a Singleton object on it's first call, and closes on shutdown. <sub><sup><sub><sup>Not without hacks, huh?</sup></sub></sup></sub>
+To increase efficiency, Selenium Webdriver loads as a Singleton object on it's first call, and closes on app's shutdown. <sub><sup>Not without hacks, huh?</sup></sub>
 
 ~~As there is no consistent way to download pictures with Selenium only, it takes screenshot of a first image it founds on the webpage. This adds a little flexibility for a cost of an image quality.~~
 
-Because Selenium can't donwload images, it converts images into Base64 with JavaScript, then into Bytes Array and into a PIL Image.
+Because Selenium can't donwload images, I convert them into Base64 with JavaScript, then into Bytes Array and, lastly, into a PIL Image.
