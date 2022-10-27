@@ -51,7 +51,9 @@ class JSONImporter:
             return Response('JSON structure is invalid', status=400)
 
         failures = []
-        json_data = json_data[:20]  # Restricted to 20 for demonstration
+
+        # TODO: Remove restriction
+        json_data = json_data[:10]  # Restricted to 10 for demonstration
 
         for data in json_data:
             serializer = InputPhotoSerializer(data=data)
