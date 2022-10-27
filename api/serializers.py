@@ -21,12 +21,12 @@ class InputPhotoSerializer(serializers.ModelSerializer):
 
     def save_photo(self):
         if not self.is_valid():
-            return Response(data='Invalid form', status=400)
+            return Response(data='Invalid request', status=400)
 
         # Loading image
         img = ImageParser.get_image(self.validated_data[PhotoFields.url])
         if img is None:
-            return Response(data='Image can not be loaded', status=400)
+            return Response(data='Image can not be loaded. http/https missing?', status=400)
 
         # Removing previously loaded picture on Update request
         if self.instance is not None:
@@ -43,5 +43,5 @@ class InputPhotoSerializer(serializers.ModelSerializer):
             self.validated_data[field] = params[field]
 
         save = self.save()
-        # Sending a response with newly-acquired id
-        return Response({PhotoFields.id: save.id, **self.data}, status=200)
+        output = OutputPhotoSerializer(save)
+        return Response(output.data, status=200)
