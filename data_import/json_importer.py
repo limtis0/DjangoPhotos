@@ -81,7 +81,7 @@ class JSONImporter:
         try:
             with open(path) as f:
                 json_data = json.load(f)
-        except UnicodeDecodeError:
+        except (UnicodeDecodeError, json.JSONDecodeError):
             return Response('Filetype must be .json', status=400)
         except PermissionError:
             return Response('Permission denied. Passed directory instead of a file?', status=400)
