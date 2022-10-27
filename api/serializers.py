@@ -42,6 +42,6 @@ class InputPhotoSerializer(serializers.ModelSerializer):
         for field in (PhotoFields.width, PhotoFields.height, PhotoFields.dominant_color):
             self.validated_data[field] = params[field]
 
-        self.save()
-
-        return Response(self.data, status=200)
+        save = self.save()
+        # Sending a response with newly-acquired id
+        return Response({PhotoFields.id: save.id, **self.data}, status=200)

@@ -3,6 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 class PhotoFields:
+    id = 'id'
     title = 'title'
     albumId = 'albumId'
     url = 'url'
