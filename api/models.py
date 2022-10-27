@@ -1,6 +1,15 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
-from PIL import Image
+
+
+class PhotoFields:
+    title = 'title'
+    albumId = 'albumId'
+    url = 'url'
+    width = 'width'
+    height = 'height'
+    dominant_color = 'color'
+    file = 'file'
 
 
 class Photo(models.Model):
@@ -18,20 +27,3 @@ class Photo(models.Model):
         except ObjectDoesNotExist:
             photo = None
         return photo
-
-    @staticmethod
-    def _get_dominant_color(img: Image):
-        img = img.resize((150, 150), resample=0)  # Minor optimization
-        dominant_color = max(img.getcolors(maxcolors=22500), key=lambda x: x[0])  # Max count from List[(count, (RGB))]
-        hex_value = '#%02x%02x%02x' % dominant_color[1][:3]  # Filter RGB tuple to HEX string
-        return hex_value
-
-    @classmethod
-    def get_image_info(cls, img: Image):
-        width, height = img.size
-        dominant_color = cls._get_dominant_color(img)
-        return {
-            'width': width,
-            'height': height,
-            'color': dominant_color
-        }

@@ -21,7 +21,7 @@ class WebDriver(metaclass=Singleton):
         service = Service(ChromeDriverManager().install())
         options = Options()
         options.add_argument("--start-maximized")
-        # _options.headless = True
+        # options.headless = True  # TODO: Switch to headless
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
         self.driver = WebDriver.driver = webdriver.Chrome(service=service, options=options)

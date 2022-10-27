@@ -1,6 +1,7 @@
-from pathlib import Path
 import shortuuid
 from PIL import Image
+
+from pathlib import Path
 from DjangoPhotos.settings import BASE_DIR, MEDIA_URL
 
 

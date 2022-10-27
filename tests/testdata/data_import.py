@@ -1,7 +1,10 @@
+from api.models import PhotoFields
+
+
 class DataImport:
-    valid_api = {'url': 'https://jsonplaceholder.typicode.com/photos'}
-    invalid_api = {'url': 'https://google.com'}
-    invalid_url = {'url': 'My name is Vladimir'}
+    valid_api = {PhotoFields.url: 'https://jsonplaceholder.typicode.com/photos'}
+    invalid_api = {PhotoFields.url: 'https://google.com'}
+    invalid_url = {PhotoFields.url: 'My name is Vladimir'}
     invalid_request = {'asdf': 'ghjk'}
 
     json_file_valid = 'tests/testdata/photos.json'

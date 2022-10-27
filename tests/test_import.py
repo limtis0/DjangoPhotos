@@ -1,7 +1,7 @@
 import requests
 
 from api.urls import URL
-from api.models import Photo
+from api.models import Photo, PhotoFields
 
 from testdata.data_import import DataImport
 from data_import.json_importer import JSONImporter
@@ -9,8 +9,8 @@ from data_import.json_importer import JSONImporter
 
 class TestImport:
     def test_is_json_valid(self):
-        response = requests.get(DataImport.valid_api['url'])
-        assert JSONImporter._is_json_valid(response.json()) is True
+        response = requests.get(DataImport.valid_api[PhotoFields.url])
+        assert JSONImporter._json_is_valid(response.json()) is True
 
     def test_url_import(self, api_client, photo_cleanup):
         url = f'{URL.API_DIR}{URL.IMPORT_API}'

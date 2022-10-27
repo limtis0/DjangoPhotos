@@ -1,6 +1,6 @@
 from pathlib import Path
 from api.urls import URL
-from api.models import Photo
+from api.models import Photo, PhotoFields
 from testdata.data_photos import DataPhotos
 
 
@@ -26,8 +26,8 @@ class TestCRUD:
         new_photo = Photo.get_by_id(1)
         assert update.status_code == 200, 'Failed to update'
         assert all([
-            new_photo.title == DataPhotos.valid_photo_2['title'],
-            new_photo.albumId == DataPhotos.valid_photo_2['albumId'],
+            new_photo.title == DataPhotos.valid_photo_2[PhotoFields.title],
+            new_photo.albumId == DataPhotos.valid_photo_2[PhotoFields.albumId],
         ]), 'Photo\'s info has not changed on update'
 
     def test_delete(self, api_client, photo_applied):
