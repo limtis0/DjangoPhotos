@@ -3,7 +3,6 @@ from json import JSONDecodeError
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 
-from .image_parser import ImageParser
 from .url_is_valid import url_is_valid
 
 from rest_framework.response import Response
@@ -40,11 +39,9 @@ class JSONImporter:
         if not cls._is_json_valid(json_data):
             return Response('JSON response is invalid', status=400)
 
-        driver = ImageParser.get_webdriver()
         for j in json_data[:10]:  # Restricted to 10 for demonstration
             serializer = InputPhotoSerializer(data=j)
-            serializer.save_photo(driver)
-        driver.close()
+            serializer.save_photo()
 
         return Response(status=200)
 
