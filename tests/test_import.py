@@ -32,7 +32,7 @@ class TestImport:
         import_invalid_request = api_client.post(url, data=DataImport.invalid_request)
         assert import_invalid_request.status_code == 400, 'Invalid request is handled incorrectly'
 
-    def test_local_file_import(self, api_client, photo_cleanup):
+    def test_local_file_import(self, photo_cleanup):
         valid = JSONImporter.import_from_local_file(DataImport.json_file_valid)
         assert valid.status_code == 200, 'Import from local file not working'
 
@@ -42,3 +42,14 @@ class TestImport:
             JSONImporter.import_from_local_file(DataImport.file_type_invalid),
             JSONImporter.import_from_local_file(DataImport.file_nonexistent)
         ])), 'Edge cases are handled incorrectly'
+
+    def test_api_file_import(self, api_client, photo_cleanup):
+        url = f'{URL.API_DIR}{URL.IMPORT_FILE}'
+
+        with open(DataImport.json_file_valid) as f:
+            import_valid = api_client.post(url, data={PhotoFields.file: f})
+        assert import_valid.status_code == 200, 'Import from file by API is not working correctly'
+
+        with open(DataImport.json_file_invalid) as f:
+            import_invalid = api_client.post(url, data={PhotoFields.file: f})
+        assert import_invalid.status_code == 400, 'Invalid import from file by API is handled incorrectly'
