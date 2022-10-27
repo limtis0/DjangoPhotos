@@ -2,6 +2,7 @@ import pytest
 from api.urls import URL
 from api.models import Photo
 from testdata.data_photos import DataPhotos
+from data_import.webdriver import WebDriver
 
 
 class TestCRUD:
@@ -17,7 +18,9 @@ class TestCRUD:
 
         create = api_client.post(f'{URL.API_DIR}{URL.CREATE}', data=DataPhotos.valid_photo)
         assert create.status_code == 200, 'Failed to create'
+
         photos_cleanup()
+        WebDriver.close()
 
     @pytest.mark.django_db
     def test_update(self, api_client, photo_applied, photos_cleanup):
@@ -29,7 +32,9 @@ class TestCRUD:
         update = api_client.post(url, data=DataPhotos.valid_photo_2)
         assert update.status_code == 200, 'Failed to update'
         assert Photo.get_by_id(1).albumId == DataPhotos.valid_photo_2['albumId'], 'Photo info has not changed on update'
+
         photos_cleanup()
+        WebDriver.close()
 
     @pytest.mark.django_db
     def test_delete(self, api_client, photo_applied):

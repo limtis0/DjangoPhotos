@@ -22,3 +22,9 @@ class DataPhotos:
         'title': 'TestImage',
         'url': 'https://www.longestjokeintheworld.com/'
     }
+
+    test_image_1 = 'tests/testdata/image_800_600_000000.png'
+    test_image_1_info = {'width': 800, 'height': 600, 'color': '#000000'}
+
+    test_image_2 = 'tests/testdata/image_500_400_22b14c.png'
+    test_image_2_info = {'width': 500, 'height': 400, 'color': '#22b14c'}

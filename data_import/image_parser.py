@@ -14,10 +14,10 @@ class ImageParser:
         if not url_is_valid(url):
             return False
 
-        WebDriver.driver.get(url)
+        WebDriver().driver.get(url)
         try:
             # Takes a partial screenshot of a first img object found
-            screenshot = WebDriver.driver.find_element(By.TAG_NAME, 'img').screenshot_as_png
+            screenshot = WebDriver().driver.find_element(By.TAG_NAME, 'img').screenshot_as_png
             img = Image.open(BytesIO(screenshot))
             return img
         except NoSuchElementException:
