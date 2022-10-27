@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium_stealth import stealth
 
 
 class Singleton(type):
@@ -20,11 +21,22 @@ class WebDriver(metaclass=Singleton):
     def __init__(self):
         service = Service(ChromeDriverManager().install())
         options = Options()
-        options.add_argument("--start-maximized")
-        # options.headless = True  # TODO: Switch to headless
+        options.headless = True  # TODO: Remove if blocks data collection
+        options.add_argument('--window-size=1920,1080')
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
         self.driver = WebDriver.driver = webdriver.Chrome(service=service, options=options)
+
+        # Prevents cloudflare headless detection
+        stealth(self.driver,
+                languages=["en-US", "en"],
+                vendor="Google Inc.",
+                platform="Win32",
+                webgl_vendor="Intel Inc.",
+                renderer="Intel Iris OpenGL Engine",
+                fix_hairline=True,
+                )
+
         self.__class__.initialized = True
 
     @classmethod
@@ -37,4 +49,7 @@ class WebDriver(metaclass=Singleton):
         # It won't be a problem, when ran in a restricted environment, but on a local machine it kills chrome :/
         for proc in psutil.process_iter():
             if proc.name() in ('chrome.exe', 'chromedriver.exe'):
-                proc.kill()
+                try:
+                    proc.kill()
+                except psutil.NoSuchProcess:
+                    pass

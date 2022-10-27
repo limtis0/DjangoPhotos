@@ -1,4 +1,4 @@
-from api.photo import PhotoFields
+from api.models import PhotoFields
 from django.core.management.base import BaseCommand
 from data_import.json_importer import JSONImporter
 from data_import.webdriver import WebDriver

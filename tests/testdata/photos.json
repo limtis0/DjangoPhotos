@@ -66,14 +66,14 @@
     "albumId": 79,
     "id": 3905,
     "title": "sint totam aut est maiores quasi",
-    "url": "https://via.placeholder.com/600/8fd240",
+    "url": "this.url.is/wrong",
     "thumbnailUrl": "https://via.placeholder.com/150/8fd240"
   },
   {
     "albumId": 79,
     "id": 3906,
     "title": "magni blanditiis ullam velit enim sit",
-    "url": "https://via.placeholder.com/600/a5e236",
+    "url": "https://this.should/fail",
     "thumbnailUrl": "https://via.placeholder.com/150/a5e236"
   }
 ]

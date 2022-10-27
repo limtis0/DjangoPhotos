@@ -4,20 +4,20 @@ from api.models import PhotoFields
 
 from .webdriver import WebDriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.errorhandler import NoSuchElementException
+from selenium.webdriver.remote.errorhandler import NoSuchElementException, InvalidArgumentException, WebDriverException
 
 
 class ImageParser:
     @classmethod
     def get_image(cls, url: str):
-        WebDriver().driver.get(url)
         try:
+            WebDriver().driver.get(url)
             # Takes a screenshot of a first img object found.
             # TODO: Find a way to download images with Selenium without losing quality
             screenshot = WebDriver().driver.find_element(By.TAG_NAME, 'img').screenshot_as_png
             img = Image.open(BytesIO(screenshot))
             return img
-        except NoSuchElementException:
+        except (NoSuchElementException, InvalidArgumentException, WebDriverException):
             return None
 
     @staticmethod

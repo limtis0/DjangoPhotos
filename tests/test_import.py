@@ -48,7 +48,7 @@ class TestImport:
 
         with open(DataImport.json_file_valid) as f:
             import_valid = api_client.post(url, data={PhotoFields.file: f})
-        assert import_valid.status_code == 200, 'Import from file by API is not working correctly'
+        assert import_valid.data['successful'] == 9, 'Import from file by API is not working correctly'
 
         with open(DataImport.json_file_invalid) as f:
             import_invalid = api_client.post(url, data={PhotoFields.file: f})

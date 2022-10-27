@@ -3,7 +3,7 @@ from data_import.image_parser import ImageParser
 from testdata.data_photos import DataPhotos
 
 
-class TestPhotos:
+class TestImages:
     def test_get_params(self):
         img1 = Image.open(DataPhotos.test_image_1)
         info1 = ImageParser.get_image_info(img1)
