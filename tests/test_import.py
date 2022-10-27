@@ -14,14 +14,13 @@ class TestImport:
         assert JSONImporter._is_json_valid(response.json()) is True
 
     @pytest.mark.django_db
-    def test_url_import(self, api_client, photos_cleanup):
+    def test_url_import(self, api_client, photo_cleanup):
         url = f'{URL.API_DIR}{URL.IMPORT_API}'
 
         # Valid response
         import_valid = api_client.post(url, data=DataImport.valid_api)
         assert import_valid.status_code == 200, 'Could not import from API'
         assert len(Photo.objects.all()) > 1, 'Could not import from API'
-        photos_cleanup()
 
         # Invalid response
         import_invalid_api = api_client.post(url, data=DataImport.invalid_api)
