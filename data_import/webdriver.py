@@ -46,7 +46,8 @@ class WebDriver(metaclass=Singleton):
 
         # This is a hack
         # Selenium hangs while handling SIGINT (for a minute or so): https://github.com/SeleniumHQ/selenium/issues/9835
-        # It won't be a problem, when ran in a restricted environment, but on a local machine it kills chrome :/
+        # It won't be a problem when ran in restricted environment, but on a local machine it kills chrome :/
+        # Also, this is cross-platform
         for proc in psutil.process_iter():
             if proc.name() in ('chrome.exe', 'chromedriver.exe'):
                 try:
